@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BankController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('/bank/create',[BankController::class,'create']);
     Route::post('/bank/update',[BankController::class,'update']);
 
+//Products Start
+    Route::get('/products',[ProductController::class,'index']);
+    Route::post('/product/create',[ProductController::class,'create']);
+    Route::post('/product/update',[ProductController::class,'create']);
 

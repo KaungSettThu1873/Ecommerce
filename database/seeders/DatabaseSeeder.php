@@ -3,8 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\UserBank;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\ProductsSeeder;
+use Database\Seeders\UserBanksSeeder;
+use Database\Seeders\CategoriesSeeder;
 use Database\Seeders\RolesAndPermissionsSeeder;
 
 
@@ -28,7 +32,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RolesAndPermissionsSeeder::class,
-            BanksSeeder::class
+            BanksSeeder::class,
+            UserBanksSeeder::class,
+            CategoriesSeeder::class,
+            ProductsSeeder::class
             ]);
     }
 }

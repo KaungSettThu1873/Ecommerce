@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     public function index () {
-        $users = User::orderBy('id')->paginate(10);
+        $users = User::with(['userbanks'])->orderBy('id')->paginate(10);
 
         return response()->json([
             'message' => 'success',
