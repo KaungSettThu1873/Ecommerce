@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
@@ -27,5 +28,8 @@ Route::middleware('auth:sanctum')->group(function() {
 //Products Start
     Route::get('/products',[ProductController::class,'index']);
     Route::post('/product/create',[ProductController::class,'create']);
-    Route::post('/product/update',[ProductController::class,'create']);
+    Route::post('/product/update',[ProductController::class,'update']);
+    Route::get('/product/delete/{id}',[ProductController::class,'delete']);
 
+
+Route::post('/login',[AuthController::class,'login']);

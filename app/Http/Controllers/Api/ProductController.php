@@ -10,35 +10,32 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $data = Product::with('Category')->orderBy('id')->paginate(2);
 
-        return response()->json([
-            'message' => 'Successful',
-            'data'    => $data
-        ],200);
+        return api_success($data,'Successful',200);
     }
 
-    public function create(Request $request) {
-            $validate = Validator::make($request->all(),[
-                'category_id' => 'required',
-                'name'        => 'required|max:70,min:5',
-                'img_path'    => 'required|mimes:jpeg,jpg,webp,png|max:5120',
-                'price'       => 'required|max:40',
-                'quantity'    => 'required|max:500',
-                'instock'     => 'required',
-            ]);
+    public function create(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+            'category_id' => 'required',
+            'name'        => 'required|max:70,min:5',
+            'img_path'    => 'required|mimes:jpeg,jpg,webp,png|max:5120',
+            'price'       => 'required|max:40',
+            'quantity'    => 'required|max:500',
+            'instock'     => 'required',
+        ]);
 
-            if($validate->fails()) {
-                return response()->json([
-                    'message' => $validate->errors()
-                ],422);
-            }
+        if($validate->fails()) {
+            return api_error('Validation error', $validate->errors(), 422);
+        }
 
-            $validatedData = $validate->validated();
+        $validatedData = $validate->validated();
 
-        try {
-
+        try
+        {
             $path = $request->file('img_path')->store('products', 'public');
 
             $data = Product::create([
@@ -50,15 +47,66 @@ class ProductController extends Controller
                 'instock'     => $validatedData['instock']
             ]);
 
-            return response()->json([
-                'message' => 'Product created successfully!',
-                'data'    => $data
-            ],200);
+            return api_success($data,'Product created successfully!', 201);
         } catch(Exception $e){
-            return response()->json([
-                'message' => 'Something went wrong!',
-                'error'   => $e->getMessage()
-            ],500);
+            return api_error('Something went wrong!',$e->getMessage(),500);
         }
+    }
+
+    public function update(Request $request)
+    {
+        $validate = Validator::make($request->all(),[
+              'id'          => 'required',
+              'category_id' => 'required',
+              'name'        => 'required|max:70,min:5',
+              'img_path'    => 'nullable|mimes:jpeg,jpg,webp,png|max:5120',
+              'price'       => 'required|max:40',
+              'quantity'    => 'required|max:500',
+              'instock'     => 'required',
+        ]);
+
+        if($validate->fails())
+        {
+            return api_error('Validation error', $validate->errors(), 422);
+        }
+
+        try
+        {
+            $validatedData = $validate->validated();
+
+            $data =[
+                'category_id' => $validatedData['category_id'],
+                'name'        => $validatedData['name'],
+                'price'       => $validatedData['price'],
+                'quantity'    => $validatedData['quantity'],
+                'instock'     => $validatedData['instock']
+            ];
+
+            if($request->hasFile('img_path')) {
+                    $path = $request->file('img_path')->store('products', 'public');
+                    $data['img_path'] =  $path;
+            }
+
+            $updateData = Product::find($validatedData['id']);
+
+            $updateData->update($data);
+
+            return api_success($updateData,'Product information updated successful!',200);
+        } catch (Exception $e)
+        {
+           return api_error('Something went wrong!',$e->getMessage(), 500);
+        }
+    }
+
+    public function delete($id)
+    {
+       $product =  Product::find($id);
+
+       if(!$product) {
+        return api_error('Product not found!',null,404);
+       }
+
+       $product->delete();
+       return api_success(null,'Product deleted successfully!',200);
     }
 }
