@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\UserBank;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CartsSeeder;
 use Database\Seeders\ProductsSeeder;
 use Database\Seeders\UserBanksSeeder;
 use Database\Seeders\CategoriesSeeder;
@@ -26,8 +27,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        user::Create(['name' => "KaungSett",'email'=>"kaungsettthu1873@gmail.com",'password'=>"gscplus"]);
-        user::Create(['name' => "ZawZaw",'email'=>"zawzaw1873@gmail.com",'password'=>"gscplus"]);
+        user::Create(['name' => "KaungSett",'email'=>"kaungsettthu1873@gmail.com",'password'=>"Kst97542106"]);
+        user::Create(['name' => "ZawZaw",'email'=>"zawzaw1873@gmail.com",'password'=>"Kst97542106"]);
 
 
         $this->call([
@@ -35,7 +36,8 @@ class DatabaseSeeder extends Seeder
             BanksSeeder::class,
             UserBanksSeeder::class,
             CategoriesSeeder::class,
-            ProductsSeeder::class
+            ProductsSeeder::class,
+            CartsSeeder::class
             ]);
     }
 }
