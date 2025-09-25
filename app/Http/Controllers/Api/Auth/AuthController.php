@@ -9,8 +9,35 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Phiki\Token\Token;
 
+
+
 class AuthController extends Controller
 {
+
+    /**
+ * @OA\Post(
+ *     path="/api/login",
+ *     summary="User login",
+ *     tags={"Auth"},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"email","password"},
+ *             @OA\Property(property="email", type="string", format="email", example="kaungsettthu1873@gmail.com"),
+ *             @OA\Property(property="password", type="string", example="Kst97542106")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Login successful"
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Invalid credentials"
+ *     )
+ * )
+ */
+
     public function login (Request $request) {
         $validate = Validator::make($request->all(),[
             'email' =>  'required|email',

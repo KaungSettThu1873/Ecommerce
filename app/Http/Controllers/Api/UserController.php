@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+/**
+ * @OA\Get(
+ *     path="/api/users ",
+ *     summary="Get list of users",
+ *     @OA\Response(response=200, description="Success")
+ * )
+ */
     public function index ()
     {
         $users = User::with(['userbanks'])->orderBy('id')->paginate(10);
