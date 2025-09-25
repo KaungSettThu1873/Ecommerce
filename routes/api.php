@@ -14,12 +14,12 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login',[AuthController::class,'login']);
 
-
-Route::middleware('auth:sanctum')->group(function()
+// Route::resource('/users',UserController::class);
+Route::middleware(['auth:sanctum','check.role:Admin'])->group(function()
 {
-    Route::get('/users',[UserController::class,'index']);
-    Route::post('/user/create',[UserController::class,'create']);
-    Route::post('/user/update',[UserController::class,'update']);
+    Route::resource('/users',UserController::class);
+    // Route::post('/user/create',[UserController::class,'create']);
+    // Route::post('/user/update',[UserController::class,'update']);
 
     // Banks Start
     Route::get('/banks',[BankController::class,'index']);
@@ -27,13 +27,18 @@ Route::middleware('auth:sanctum')->group(function()
     Route::post('/bank/update',[BankController::class,'update']);
 
     //Products Start
+
+
+    //Carts Start
+    // Route::get('/users/{$id}/cart/',[CartController::class,'index']);
+});
+
+Route::middleware(['auth:sanctum','check.role:User'])->group(function () {
+    //  Route::resource('/users',UserController::class);
     Route::get('/products',[ProductController::class,'index']);
     Route::post('/product/create',[ProductController::class,'create']);
     Route::post('/product/update',[ProductController::class,'update']);
     Route::get('/product/delete/{id}',[ProductController::class,'delete']);
-
-    //Carts Start
-    // Route::get('/users/{$id}/cart/',[CartController::class,'index']);
 });
 
     Route::get('/users/cart/{id}',[CartController::class,'index']);

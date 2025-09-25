@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('user_banks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+           $table->uuid('user_id'); // users.id (uuid) နဲ့ type ကိုက်အောင်
+    $table->foreign('user_id')
+          ->references('id')
+          ->on('users')
+          ->onDelete('cascade');
             $table->foreignId('bank_id')->references('id')->on('banks')->onDelete('cascade');
             $table->string('bank_acc_name');
             $table->string('bank_acc_no');

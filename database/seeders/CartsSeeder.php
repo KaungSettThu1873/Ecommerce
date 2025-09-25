@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -13,16 +14,17 @@ class CartsSeeder extends Seeder
      */
     public function run(): void
     {
+          $userId = User::select('id')->first();
         $Carts = [
             [
-                'user_id'    => 1,
+                'user_id'    => $userId['id'],
                 'product_id' => 1,
                 'category_name' => 'Ecommerce',
                 'quantity'      => 2,
                 'price'         => 8000000
             ],
               [
-                'user_id'    => 1,
+                'user_id'    => $userId['id'],
                 'product_id' => 1,
                 'category_name' => 'Ecommerce',
                 'quantity'      => 3,

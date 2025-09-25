@@ -34,6 +34,7 @@ class AuthController extends Controller
             return api_error('Password is wrong!',null,401);
         }
 
+
         $token= $user->createToken('auth_token')->plainTextToken;
 
         $data = [

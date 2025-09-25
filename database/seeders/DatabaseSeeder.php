@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        user::Create(['name' => "KaungSett",'email'=>"kaungsettthu1873@gmail.com",'password'=>"Kst97542106"]);
-        user::Create(['name' => "ZawZaw",'email'=>"zawzaw1873@gmail.com",'password'=>"Kst97542106"]);
+        user::Create(['name' => "KaungSett",'email'=>"kaungsettthu1873@gmail.com",'password'=>"Kst97542106",'role' => 'Admin']);
+        user::Create(['name' => "ZawZaw",'email'=>"zawzaw1873@gmail.com",'password'=>"Kst97542106",'role' => 'User']);
 
 
         $this->call([
